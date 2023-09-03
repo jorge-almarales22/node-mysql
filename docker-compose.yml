@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+  
+  mariadb:
+    image: mariadb:lts-jammy
+    container_name: mariadb
+    environment:
+      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
+      - MARIADB_USER=${MARIADB_USER}
+      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
+    ports:
+      - ${MARIADB_PORT}:${MARIADB_PORT}
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin
+    restart: unless-stopped
+    environment:
+      - PMA_HOST=mariadb
+      - PMA_PORT=${MARIADB_PORT}
+    ports:
+      - 8080:80
