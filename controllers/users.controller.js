@@ -5,7 +5,12 @@ import 'dotenv/config'
 
 export const userGet = async(req, res) => {
     try {
-        const [resp] = await pool.query('SELECT name, salary from users')
+        const [resp] = await pool.query(
+            `
+            SELECT u.name as Nombre_Empleado, p.name as Nombre_producto, o.quantity AS Cantidad, p.price as Precio FROM orders o INNER JOIN users u ON u.id = o.user_id INNER JOIN products p on o.product_id = p.id WHERE u.id = ?;
+            `,
+            [req.params.id]
+        )
         res.json(resp)
     } catch (error) {
         return res.status(500).json({msg: error.message})

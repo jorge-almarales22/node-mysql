@@ -3,7 +3,7 @@ import { userDelete, userGet, userPost, userSendEmail } from '../controllers/use
 
 export const usersRoutes = Router()
 
-usersRoutes.get('/', userGet)
+usersRoutes.get('/:id', userGet)
 usersRoutes.post('/', userPost)
 usersRoutes.delete('/:id', userDelete)
 
