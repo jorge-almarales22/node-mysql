@@ -1,4 +1,7 @@
 import { pool } from "../database/config.js"
+import { html } from "../helpers/welcome.email.js"
+import  sgMail  from "../services/sendgrid.js"
+import 'dotenv/config'
 
 export const userGet = async(req, res) => {
     try {
@@ -33,4 +36,29 @@ export const userDelete = async(req, res) => {
     } catch (error) {
         return res.status(500).json({msg: error.message})
     }
+}
+
+export const userSendEmail = async(req, res) => {
+
+    const { email, subject, message, sandbox_mode = false } = req.body
+    const msg = {
+        to: email,
+        subject: subject,
+        text: message,
+        from: process.env.EMAIL,
+        html,
+        mail_settings: {
+            sandbox_mode: {
+                enable: sandbox_mode
+            }
+        }
+    }
+
+    try {
+        await sgMail.send(msg)        
+    } catch (error) {
+        return res.status(500).json({msg: error.message})
+    }
+
+    res.status(200).json({success: true})
 }
