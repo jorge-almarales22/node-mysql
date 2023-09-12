@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import { userDelete, userGet, userPost, userSendEmail } from '../controllers/users.controller.js'
+import { getImage, userDelete, userGet, userPost, userSendEmail } from '../controllers/users.controller.js'
 
 export const usersRoutes = Router()
 
@@ -8,3 +8,5 @@ usersRoutes.post('/', userPost)
 usersRoutes.delete('/:id', userDelete)
 
 usersRoutes.post('/email', userSendEmail)
+
+usersRoutes.post('/file', getImage)
