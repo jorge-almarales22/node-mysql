@@ -1,5 +1,4 @@
 import { pool } from "../database/config.js"
-import { upload } from "../helpers/multer.js"
 import { html } from "../helpers/welcome.email.js"
 import  sgMail  from "../services/sendgrid.js"
 import 'dotenv/config'
@@ -70,8 +69,6 @@ export const userSendEmail = async(req, res) => {
 }
 
 export const getImage = (req, res) => {
-
-    upload(req, res, (err) => {});
 
     res.json({
         'message': 'File uploaded successfully',
