@@ -2,6 +2,7 @@ import express from 'express'
 import 'dotenv/config'
 import cors from 'cors'
 import { usersRoutes } from '../routes/users.route.js'
+import { authRoutes } from '../routes/auth.routes.js'
 
 export default class Server{
 
@@ -11,6 +12,7 @@ export default class Server{
         this.app = express()
         this.port = process.env.PORT
         this.usersPath = '/api/users'
+        this.authPath = '/api/auth'
 
         //Middlewares
         this.middlewares()
@@ -35,6 +37,7 @@ export default class Server{
     routes(){
 
         this.app.use(this.usersPath, usersRoutes)
+        this.app.use(this.authPath, authRoutes)
 
         this.app.use((req, res, next) => {
             return res.status(404).json({
